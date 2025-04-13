@@ -4,11 +4,17 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import UserList from '../UserList';
 import SubmissionList from '../SubmissionList';
 import EditTaskForm from '../EditTaskCard';
+import { useDispatch } from 'react-redux';
+import { deleteTask } from '../../ReduxToolkit/TaskSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 
 const role="ROLE_ADMIN"
 const TaskCard = ({item}) => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openMenu = Boolean(anchorEl);
   const handleMenuClick = (event) => {
@@ -43,12 +49,25 @@ const TaskCard = ({item}) => {
     setOpenUpdateTaskForm(false);
   };
 
+
+  const handleRemoveTaskIdParams = () => {
+    const updatedParams = new URLSearchParams(location.search);
+    updatedParams.delete("filter");
+                const queryString = updatedParams.toString();
+                const updatedPath = queryString ? `${location.pathname}?${queryString}` : 
+                location.pathname;
+            navigate(updatedPath);
+  }
   const handleOpenUpdateTaskModel = () => {
+    const updatedParams = new URLSearchParams(location.search);
     setOpenUpdateTaskForm(true);
+    updatedParams.set("taskId",item.id);
+    navigate(`${location.pathname}?${updatedParams.toString()}`);
     handleMenuClose();
   };
 
   const handleDeleteTask = () => {
+    dispatch(deleteTask(item.id));
     
     handleMenuClose();
   };
@@ -113,9 +132,11 @@ const TaskCard = ({item}) => {
         </div>
 
       </div>
-      <UserList open={openUserList} handleClose={handleCloseUserList}/>
-      <SubmissionList open={openSubmissionList} handleClose={handleCloseSubmissionList}/>
-      <EditTaskForm open={openUpdateTaskForm} handleClose={handleCloseUpdateTaskForm}/>
+      <UserList open={openUserList} handleClose={handleCloseUserList} />
+      <SubmissionList open={openSubmissionList} handleClose=
+      {handleCloseSubmissionList} />
+      <EditTaskForm item={item} open={openUpdateTaskForm} 
+      handleClose={handleCloseUpdateTaskForm}/>
       </div>
     
   );

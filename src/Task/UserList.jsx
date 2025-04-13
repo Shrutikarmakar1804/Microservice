@@ -2,6 +2,8 @@ import { Avatar, Button, Divider, ListItem, ListItemAvatar, ListItemText } from 
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserList } from '../ReduxToolkit/AuthSlice';
 
 const style = {
   position: 'absolute',
@@ -18,6 +20,14 @@ const style = {
 
 const tasks=[1,1,1,1]
 export default function UserList({handleClose, open}) {
+
+  const dispatch = useDispatch();
+  const { auth }=useSelector(store=>store);
+
+React.useEffect((item)=>{
+dispatch(getUserList(localStorage.getItem("jwt")));
+
+},[])
  
 
   return (
@@ -30,7 +40,7 @@ export default function UserList({handleClose, open}) {
       >
         <Box sx={style}>
          {
-          tasks.map((item,index) => (
+          auth.users.map((item,index) => (
             <>
               <div className='flex items-center justify-between w-full'>
                 <div>
@@ -41,8 +51,8 @@ export default function UserList({handleClose, open}) {
                       src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCQ61aOdEt06K7-Bi7CncJrfcUTwAK9vdsww&s' />
                     </ListItemAvatar>
                     <ListItemText
-                      secondary="@flow_state"
-                      primary={"Flow State"}
+                      secondary={`@${item.fullName.split("").join("_").toLowerCase()}`}
+                      primary={"item.fullName"}
                     />
                   </ListItem>
                 </div>
