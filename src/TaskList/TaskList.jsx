@@ -26,9 +26,11 @@ const TaskList = () => {
   return (
     <div className=' w-[67vw]'>
         <div className='space-y-3'>
-            {task.tasks.map((item) => (
+            {auth.user?.role === "ROLE_ADMIN"? task.tasks.map((item) => (
             <TaskCard key={item} item={item} />
-            ))}
+            )):task.usersTask.map((item) => (
+              <TaskCard key={item} item={item} />
+            ))};
        </div>
     </div>
   

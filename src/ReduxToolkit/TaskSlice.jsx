@@ -112,7 +112,7 @@ const taskSlice = createSlice({
         loading : false,
         error : null,
         taskDetails: null,
-        userTasks: []
+        usersTask: []
     },
     reducer : {},
     extraReducers : (builder) => {
