@@ -9,7 +9,7 @@ export const fetchTasks = createAsyncThunk("task/fetchTasks",
             const { data } = await api.get("/api/tasks",{
                 params:{status}
             });
-            console.log("fetch tasks ", data);
+            // console.log("fetch tasks ", data);
             return data;
         } catch (error) {
             console.log("catch error", error);
@@ -25,7 +25,7 @@ export const fetchUsersTasks = createAsyncThunk("task/fetchUsersTasks",
             const { data } = await api.get("/api/tasks/user",{
                 params:{status}
             });
-            console.log("fetch users tasks ", data);
+            // console.log("fetch users tasks ", data);
             return data;
         } catch (error) {
             console.log("catch error", error);
@@ -39,7 +39,7 @@ export const fetchTasksById = createAsyncThunk("task/fetchTasksById",
         setAuthHeader(localStorage.getItem("jwt"), api)
         try {
             const { data } = await api.get(`/api/tasks/${taskId}`);
-            console.log("fetch tasks by Id", data);
+            // console.log("fetch tasks by Id", data);
             return data;
         } catch (error) {
             console.log("catch error", error);
@@ -53,7 +53,7 @@ export const createTask = createAsyncThunk("task/createTask",
         setAuthHeader(localStorage.getItem("jwt"), api)
         try {
             const { data } = await api.post(`/api/tasks`, taskData);
-            console.log("created task ", data);
+            // console.log("created task ", data);
             return data;
         } catch (error) {
             console.log("catch error", error);
@@ -68,7 +68,7 @@ export const updatedTask = createAsyncThunk("task/updatedTask",
 
         try {
             const { data } = await api.put(`/api/tasks/${id}`,updatedTaskData);
-            console.log("updated task", data);
+            // console.log("updated task", data);
             return data;
         } catch (error) {
             console.log(" error ", error);
@@ -82,7 +82,7 @@ export const assignedTasktoUser = createAsyncThunk("task/assignedTasktoUser",
         setAuthHeader(localStorage.getItem("jwt"), api)
         try {
             const { data } = await api.get(`/api/tasks/${taskId}/user/${userId}/assigned`);
-            console.log("assigned task", data);
+            // console.log("assigned task", data);
             return data;
         } catch (error) {
             console.log("catch error", error);
@@ -96,7 +96,7 @@ export const deleteTask = createAsyncThunk("task/deleteTask",
         setAuthHeader(localStorage.getItem("jwt"), api);
         try {
             const { data } = await api.delete(`/api/tasks/${taskId}`);
-            console.log("task deleted successfully");
+            // console.log("task deleted successfully");
             return id;
         } catch (error) {
             console.log("catch error", error);
